@@ -1,0 +1,60 @@
+namespace ACTIVIDAD_1___FLUJO_DE_CONTROL_PART._1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            // 1. Pedir el sueldo
+            Console.Write("Ingrese su sueldo mensual: ");
+            double sueldoMensual = double.Parse(Console.ReadLine());
+
+            // Convertimos a sueldo anual para comparar con la tabla de la DGII
+            double sueldoAnual = sueldoMensual * 12;
+            double impuestoAnual = 0;
+
+            // 2. Escala salarial DGII 
+            // Escala 1: Hasta RD$ 416,220.00 (Exento)
+            if (sueldoAnual <= 416220.00)
+            {
+                Console.WriteLine("Sueldo: " + sueldoMensual);
+                Console.WriteLine("ISR: N/A (Exento)");
+            }
+            // Escala 2: Desde RD$ 416,220.01 hasta RD$ 624,329.00 (15%)
+            else if (sueldoAnual <= 624329.00)
+            {
+                double excedente = sueldoAnual - 416220.01;
+                impuestoAnual = excedente * 0.15;
+                MostrarResultado(sueldoMensual, impuestoAnual);
+            }
+            // Escala 3: Desde RD$ 624,329.01 hasta RD$ 867,123.00 (20%)
+            else if (sueldoAnual <= 867123.00)
+            {
+                double excedente = sueldoAnual - 624329.01;
+                impuestoAnual = (excedente * 0.20) + 31216.00;
+                MostrarResultado(sueldoMensual, impuestoAnual);
+            }
+            // Escala 4: Desde RD$ 867,123.01 en adelante (25%)
+            else
+            {
+                double excedente = sueldoAnual - 867123.01;
+                impuestoAnual = (excedente * 0.25) + 79776.00;
+                MostrarResultado(sueldoMensual, impuestoAnual);
+            }
+
+            Console.ReadKey();
+        }
+
+        // Función auxiliar para no repetir código al mostrar resultados
+        static void MostrarResultado(double sueldo, double impuestoAnual)
+        {
+            double isrMensual = impuestoAnual / 12;
+            Console.WriteLine("Sueldo mensual: RD$ " + sueldo);
+            Console.WriteLine("ISR a pagar mensual: RD$ " + Math.Round(isrMensual, 2));
+
+
+
+        }
+    }
+}
+
